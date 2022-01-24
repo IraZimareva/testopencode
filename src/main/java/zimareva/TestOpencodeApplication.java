@@ -8,8 +8,6 @@ import zimareva.model.User;
 import zimareva.repository.AnswerRepository;
 import zimareva.repository.UserRepository;
 
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class TestOpencodeApplication {
@@ -19,15 +17,19 @@ public class TestOpencodeApplication {
 		    SpringApplication.run(TestOpencodeApplication.class, args);
         UserRepository userRepository =
                 configurableApplicationContext.getBean(UserRepository.class);
-        User myUser = new User("Ira","Zimareva");
-        Answer answer1 = new Answer("Yes",myUser);
-        Answer answer2 = new Answer("No", myUser);
-        //List <Answer> answers = Arrays.asList(answer1,answer2);
-        //myUser.setAnswers(answers);
-        userRepository.save(myUser);
-        AnswerRepository answerRepository = configurableApplicationContext.getBean(AnswerRepository.class);
+        User user1 = new User("Ira","Zimareva");
+        User user2 = new User ("Petya","Petrov");
+        userRepository.save(user1);
+        userRepository.save(user2);
+
+        AnswerRepository answerRepository =
+                configurableApplicationContext.getBean(AnswerRepository.class);
+        Answer answer1 = new Answer("Yes",user1);
+        Answer answer2 = new Answer("No", user1);
+        Answer answer3 = new Answer("Red", null);
         answerRepository.save(answer1);
         answerRepository.save(answer2);
+        answerRepository.save(answer3);
 	}
 
 }

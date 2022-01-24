@@ -49,9 +49,8 @@ public class UserService {
     public User editUser (Long id, User user){
         User userToEdit = getUser(id);
         userToEdit.setFirstName(user.getFirstName());
-        userToEdit.setSecondName(user.getSecondName());
-        //userToEdit.setAnswers(user.getAnswers());
-//Надо ли?
+        userToEdit.setLastName(user.getLastName());
+//Надо ли?        userToEdit.setAnswers(user.getAnswers());
         return userToEdit;
     }
 
@@ -59,8 +58,8 @@ public class UserService {
     public User addAnswerToUser (Long userId, Long answerId){
         User user = getUser(userId);
         Answer answer = answerService.getAnswer(answerId);
-        //user.addAnswer(answer);
-//answer.setUser(user);
+        user.addAnswer(answer);
+        answer.setUser(user);
         return user;
     }
 
@@ -68,7 +67,7 @@ public class UserService {
     public User removeAnswerFromUser (Long userId, Long answerId){
         User user = getUser(userId);
         Answer answer = answerService.getAnswer(answerId);
-        //user.removeAnswer(answer);
+        user.removeAnswer(answer);
         return user;
     }
 

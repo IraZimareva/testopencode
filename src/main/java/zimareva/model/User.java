@@ -1,5 +1,7 @@
 package zimareva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +15,21 @@ public class User {
     private Long id;
 
     private String firstName;
-    private String secondName;
-    /*@OneToMany (
+    private String lastName;
+    @OneToMany (
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-//    @JoinColumn(name = "user_id")
-    private List<Answer> answers = new ArrayList<>();*/
+    @JsonIgnoreProperties("user")
+    private List<Answer> answers = new ArrayList<>();
 
     public User() {
     }
 
     public User(String firstName, String secondName) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = secondName;
     }
 
     public Long getId() {
@@ -42,25 +44,25 @@ public class User {
         return firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    /*public List<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
+//    public void setAnswers(List<Answer> answers) {
+//        this.answers = answers;
+//    }
 
     public void addAnswer (Answer answer){
         answers.add(answer);
@@ -68,5 +70,5 @@ public class User {
 
     public void removeAnswer (Answer answer){
         answers.remove(answer);
-    }*/
+    }
 }

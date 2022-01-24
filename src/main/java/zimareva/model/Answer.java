@@ -1,5 +1,7 @@
 package zimareva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,8 +14,11 @@ public class Answer {
 
     private String textOfAnswer;
 
-    @ManyToOne
+    //@ManyToOne
+    //@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("answers")
     private User user;
 
     public Answer() {
