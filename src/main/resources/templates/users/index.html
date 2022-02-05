@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>All users</title>
+    <link th:href = "@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
-    <h2>USERS LIST</h2>
+<h2>USERS LIST</h2>
 
-    <table>
+<table class="table table-bordered  table-sm">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="user : ${users}">
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <td>
+                <a th:href="@{/users/{id}(id=${user.getId()})}"
+                   th:text="${user.getFirstName() + ' '+ user.getLastName()}">user</a>
+            </td>
         </tr>
-        <th:block th:each="user : ${users}">
-            <tr>
-                <td>
-                    <a th:href="@{/users/{id}(id=${user.getId()})}"
-                       th:text="${user.getFirstName()}">user</a>
-                </td>
-                <td th:text="${user.getLastName()}"></td>
-            </tr>
-        </th:block>
-    </table>
+    </th:block>
+    </tbody>
+</table>
 
-    <br/>
-    <hr/>
-
-    <form action="users/new" target="_blank">
-        <button>Add new user</button>
-    </form>
+<form action="users/new" target="_blank">
+    <button>Add new user</button>
+</form>
 
 </body>
 </html>

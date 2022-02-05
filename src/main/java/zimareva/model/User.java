@@ -3,6 +3,8 @@ package zimareva.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,14 @@ public class User {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotEmpty(message = "First name should not be empty")
+    @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")
     private String firstName;
+
+    @NotEmpty(message = "Last name should not be empty")
+    @Size(min = 2, max = 30, message = "Last name should be between 2 and 30 characters")
     private String lastName;
+
     @OneToMany (
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -23,6 +31,14 @@ public class User {
     )
     @JsonIgnoreProperties("user")
     private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany (
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnoreProperties("user")
+    private List<CompletedAnketa> completedAnketas = new ArrayList<>();
 
     public User() {
     }
@@ -62,6 +78,14 @@ public class User {
 
 //    public void setAnswers(List<Answer> answers) {
 //        this.answers = answers;
+//    }
+
+    public List<CompletedAnketa> getCompletedAnketas() {
+        return completedAnketas;
+    }
+
+//    public void setCompletedAnketas(List<CompletedAnketa> completedAnketas) {
+//        this.completedAnketas = completedAnketas;
 //    }
 
     public void addAnswer (Answer answer){

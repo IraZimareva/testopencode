@@ -3,10 +3,11 @@ package zimareva;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import zimareva.model.Answer;
-import zimareva.model.User;
-import zimareva.repository.AnswerRepository;
-import zimareva.repository.UserRepository;
+import zimareva.model.*;
+import zimareva.model.enums.QuestionEnum;
+import zimareva.repository.*;
+
+import java.util.Date;
 
 
 @SpringBootApplication
@@ -30,6 +31,32 @@ public class TestOpencodeApplication {
         answerRepository.save(answer1);
         answerRepository.save(answer2);
         answerRepository.save(answer3);
+
+        AnketaRepository anketaRepository =
+                configurableApplicationContext.getBean(AnketaRepository.class);
+            //Anketa anketa1 = new Anketa("Form to autorisation", new Date());
+            Anketa anketa1 = new Anketa("Form to autorisation");
+            anketaRepository.save(anketa1);
+
+        QuestionRepository questionRepository =
+                configurableApplicationContext.getBean(QuestionRepository.class);
+            Question question1 = new Question("What is your gender?"
+                    , QuestionEnum.ONEOPTION
+                    ,anketa1
+                    ,null);
+            questionRepository.save(question1);
+            Question question2 = new Question("What is your favourite mounth?"
+                    , QuestionEnum.FEWOPTIONS
+                    ,anketa1
+                    ,null);
+            questionRepository.save(question2);
+
+        OptionRepository optionRepository =
+                configurableApplicationContext.getBean(OptionRepository.class);
+        Option option1 = new Option("Male",question1);
+        Option option2 = new Option("Female",question1);
+        optionRepository.save(option1);
+        optionRepository.save(option2);
 	}
 
 }
